@@ -1,19 +1,28 @@
 // import gleam/dynamic
+// import gleam/result
 import gleam/javascript/array.{type Array}
 
 pub type Row {
   Row
 }
 
+pub type DBError {
+  DBError(Nil)
+  DBErrorMessage(e: String)
+}
+
 pub type PreparedPlan
+
 pub type Cursor
-pub type SubTransaction = fn() -> Nil
+
+pub type SubTransaction =
+  fn() -> Nil
 
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "execute")
-pub fn execute(query q: String, parameters p: p) -> Array(Row)
+pub fn execute(query q: String, parameters p: p) -> Result(Array(Row), DBError)
 
 ///
 ///
@@ -25,7 +34,10 @@ pub fn prepare(query q: String, paremeters p: Array(String)) -> PreparedPlan
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "plan_execute")
-pub fn plan_execute(plan pl: PreparedPlan, parameters p: p) -> Array(Row)
+pub fn plan_execute(
+  plan pl: PreparedPlan,
+  parameters p: p,
+) -> Result(Array(Row), DBError)
 
 ///
 ///
@@ -43,7 +55,7 @@ pub fn plan_cursor(plan pl: PreparedPlan, parameters p: p) -> Cursor
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "cursor_fetch")
-pub fn cursor_fetch(cursor c: Cursor) -> Row
+pub fn cursor_fetch(cursor c: Cursor) -> Result(Row, DBError)
 
 ///
 ///
@@ -67,6 +79,4 @@ pub fn cursor_close(cursor c: Cursor) -> Nil
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "subtransaction")
-pub fn subtransaction(transaction t: SubTransaction) -> Result(Nil, String)
-
-
+pub fn subtransaction(transaction t: SubTransaction) -> Result(Nil, DBError)

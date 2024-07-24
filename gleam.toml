@@ -9,6 +9,7 @@ target = "javascript"
 licences = ["Apache-2.0"]
 repository = { type = "github", user = "kaiwu", repo = "glv8" }
 links = [{ title = "plv8", href = "https://plv8.github.io" }, { title = "plv8ify", href = "https://github.com/divyenduz/plv8ify"}]
+gleam = ">= 0.32.0"
 #
 # For a full reference of all the available options, you can have a look at
 # https://gleam.run/writing-gleam/gleam-toml/.
