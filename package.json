@@ -1,0 +1,14 @@
+{
+  "name": "gleam-plv8",
+  "version": "1.0.0",
+  "description": "build postgresql procedures with gleam",
+  "scripts": {
+    "purge": "gleam clean && rm -rf dist/*",
+    "clean": "rm -rf dist/*"
+  },
+  "author": "Kai WU",
+  "license": "MIT",
+  "dependencies": {
+    "esbuild": "^0.23.0"
+  }
+}
