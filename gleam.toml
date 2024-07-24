@@ -1,0 +1,21 @@
+name = "glv8"
+version = "0.1.0"
+description = "Facilities to write postgresql procedures with gleam, through plv8's JavaScript binding"
+
+# Fill out these fields if you intend to generate HTML documentation or publish
+# your project to the Hex package manager.
+#
+licences = ["Apache-2.0"]
+repository = { type = "github", user = "kaiwu", repo = "glv8" }
+links = [{ title = "plv8", href = "https://plv8.github.io" }, { title = "plv8ify", href = "https://github.com/divyenduz/plv8ify"}]
+#
+# For a full reference of all the available options, you can have a look at
+# https://gleam.run/writing-gleam/gleam-toml/.
+
+[dependencies]
+gleam_stdlib = ">= 0.39.0 and < 1.0.0"
+json = ">= 1.4.1 and < 2.0.0"
+gleam_javascript = ">= 0.11.0 and < 1.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
