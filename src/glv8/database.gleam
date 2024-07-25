@@ -1,14 +1,11 @@
 // import gleam/dynamic
 // import gleam/result
 import gleam/javascript/array.{type Array}
+import glv8.{type DBError}
 
 pub type Row {
   Row
-}
-
-pub type DBError {
-  DBError(Nil)
-  DBErrorMessage(e: String)
+  NilRow(Nil)
 }
 
 pub type PreparedPlan
@@ -17,6 +14,12 @@ pub type Cursor
 
 pub type SubTransaction =
   fn() -> Nil
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "execute")
+pub fn execute0(query q: String, parameters p: p) -> Result(Int, DBError)
 
 ///
 ///
@@ -61,7 +64,10 @@ pub fn cursor_fetch(cursor c: Cursor) -> Result(Row, DBError)
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "cursor_fetch_rows")
-pub fn cursor_fetch_rows(cursor c: Cursor, rows n: Int) -> Array(Row)
+pub fn cursor_fetch_rows(
+  cursor c: Cursor,
+  rows n: Int,
+) -> Result(Array(Row), DBError)
 
 ///
 ///
