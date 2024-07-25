@@ -1,9 +1,11 @@
+import gleam/dynamic.{type DecodeErrors}
 import gleam/json.{type Json}
 
 pub type DBError {
   DBError(Nil)
   DBErrorMessage(e: String)
   DBErrorJson(j: Json)
+  DBErrorDecode(es: DecodeErrors)
 }
 
 pub type Function0 =

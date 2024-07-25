@@ -1,6 +1,6 @@
-// import gleam/dynamic
-// import gleam/result
+import gleam/dynamic.{type DecodeErrors, type Dynamic}
 import gleam/javascript/array.{type Array}
+import gleam/result
 import glv8.{type DBError}
 
 pub type Row {
@@ -30,6 +30,33 @@ pub fn execute(query q: String, parameters p: p) -> Result(Array(Row), DBError)
 ///
 ///
 ///
+pub fn decode(
+  rows rs: Array(Row),
+  decoder f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(Array(a), DBError) {
+  rs
+  |> array.to_list
+  |> dynamic.from
+  |> dynamic.list(of: f)
+  |> result.map(array.from_list(_))
+  |> result.map_error(glv8.DBErrorDecode(_))
+}
+
+///
+///
+///
+pub fn execute_as(
+  query q: String,
+  parameters p: p,
+  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(Array(a), DBError) {
+  execute(q, p)
+  |> result.try(decode(_, f))
+}
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "prepare")
 pub fn prepare(query q: String, paremeters p: Array(String)) -> PreparedPlan
 
@@ -41,6 +68,18 @@ pub fn plan_execute(
   plan pl: PreparedPlan,
   parameters p: p,
 ) -> Result(Array(Row), DBError)
+
+///
+///
+///
+pub fn plan_execute_as(
+  plan pl: PreparedPlan,
+  parameters p: p,
+  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(Array(a), DBError) {
+  plan_execute(pl, p)
+  |> result.try(decode(_, f))
+}
 
 ///
 ///
@@ -63,11 +102,47 @@ pub fn cursor_fetch(cursor c: Cursor) -> Result(Row, DBError)
 ///
 ///
 ///
+pub fn decode0(
+  row r: Row,
+  decoder f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(a, DBError) {
+  r
+  |> dynamic.from
+  |> f
+  |> result.map_error(glv8.DBErrorDecode(_))
+}
+
+///
+///
+///
+pub fn cursor_fetch_as(
+  cursor c: Cursor,
+  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(a, DBError) {
+  cursor_fetch(c)
+  |> result.try(decode0(_, f))
+}
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "cursor_fetch_rows")
 pub fn cursor_fetch_rows(
   cursor c: Cursor,
   rows n: Int,
 ) -> Result(Array(Row), DBError)
+
+///
+///
+///
+pub fn cursor_fetch_rows_as(
+  cursor c: Cursor,
+  rows n: Int,
+  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+) -> Result(Array(a), DBError) {
+  cursor_fetch_rows(c, n)
+  |> result.try(decode(_, f))
+}
 
 ///
 ///
