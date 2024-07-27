@@ -114,7 +114,7 @@ pub fn elog_error(message m: String) -> Nil {
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "run_script")
-pub fn run_script(scritp s: String, file f: String) -> Nil
+pub fn run_script(script s: String, file f: String) -> Nil
 
 ///
 ///
