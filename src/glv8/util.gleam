@@ -1,5 +1,6 @@
 import gleam/javascript.{type Symbol, get_symbol}
 import gleam/json.{type Json}
+import gleam/dynamic.{type Dynamic}
 import glv8.{
   type Function0, type Function1, type Function2, type Function3, type Function4,
 }
@@ -7,8 +8,14 @@ import glv8.{
 ///
 ///
 ///
-@external(javascript, "../glv8_ffi.mjs", "json")
+@external(javascript, "../glv8_ffi.mjs", "id")
 pub fn to_json(a: a) -> Json
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "id")
+pub fn to_dynamic(a: a) -> Dynamic
 
 ///
 ///
