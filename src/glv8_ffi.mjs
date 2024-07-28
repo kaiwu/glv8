@@ -2,6 +2,21 @@ import { Ok, Error } from "./gleam.mjs"
 import { DBErrorMessage, DBErrorJson } from "./glv8.mjs"
 import { NilRow } from "./glv8/database.mjs"
 
+export function object() {
+  return {};
+}
+
+export function merge(o, k, v) {
+  return {
+    ...o,
+    [k]: v,
+  };
+}
+
+export function get(o, k) {
+  return k in o ? new Ok(o[k]) : new Error(undefined)
+}
+
 export function id(a) {
   return a;
 }

@@ -3,7 +3,26 @@ import gleam/javascript.{type Symbol, get_symbol}
 import gleam/json.{type Json}
 import glv8.{
   type Function0, type Function1, type Function2, type Function3, type Function4,
+  type JsObject,
 }
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "object")
+pub fn object() -> JsObject
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "merge")
+pub fn merge(o: JsObject, k: k, v: v) -> JsObject
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "get")
+pub fn get(o: JsObject, k: k) -> Result(JsObject, Nil)
 
 ///
 ///

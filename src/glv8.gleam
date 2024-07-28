@@ -4,6 +4,10 @@ import gleam/list
 
 pub const prefix = "glv8"
 
+pub type JsObject {
+  JsObject
+}
+
 pub type DBError {
   DBError(Nil)
   DBErrorMessage(e: String)
