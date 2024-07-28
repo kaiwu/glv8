@@ -37,7 +37,7 @@ pub fn catch_sql_error() -> Nil {
   use <- bool.guard(result.is_ok(r), Nil)
 
   case r {
-    Error(glv8.DBErrorMessage(m)) -> elog_notice(m)
+    Error(glv8.DBErrorJson(j)) -> elog_notice(j |> json.to_string)
     _ -> elog_notice("should not come here")
   }
 }
@@ -84,4 +84,19 @@ pub fn scalar_to_record(i: Int, t: String) -> Rec {
 
 pub fn fastsum(arr: Array(Int)) -> Int {
   array.fold(arr, 0, fn(s, e) { s + e })
+}
+
+pub fn return_sql() -> Array(Rec) {
+  let decode =
+    dynamic.decode2(
+      Rec,
+      dynamic.field("i", dynamic.int),
+      dynamic.field("t", dynamic.string),
+    )
+  database.execute_as(
+    "SELECT i, $1 || i AS s FROM generate_series(1, $2) as t(i)",
+    #("s", 4),
+    decode,
+  )
+  |> result.unwrap([] |> array.from_list)
 }

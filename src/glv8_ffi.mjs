@@ -1,5 +1,5 @@
 import { Ok, Error } from "./gleam.mjs"
-import { DBErrorMessage, DBErrorJson } from "./glv8.mjs"
+import { DBErrorJson } from "./glv8.mjs"
 import { NilRow } from "./glv8/database.mjs"
 
 export function object() {
@@ -89,7 +89,7 @@ export function execute(q, p) {
     let r = p ? plv8.execute(q, p) : plv8.execute(q);
     return new Ok(r);
   } catch (e) {
-    return new Error(new DBErrorMessage(JSON.stringify(e)));
+    return new Error(new DBErrorJson(e));
   }
 }
 
@@ -102,7 +102,7 @@ export function plan_execute(pl, p) {
     let r = pl.execute(p);
     return new Ok(r);
   } catch (e) {
-    return new Error(new DBErrorMessage(JSON.stringify(e)));
+    return new Error(new DBErrorJson(e));
   }
 }
 
@@ -119,7 +119,7 @@ export function cursor_fetch(c) {
     let r = c.fetch();
     return r ? new Ok(r) : new Ok(new NilRow(undefined));
   } catch (e) {
-    return new Error(new DBErrorMessage(JSON.stringify(e)));
+    return new Error(new DBErrorJson(e));
   }
 }
 
@@ -128,7 +128,7 @@ export function cursor_fetch_rows(c, n) {
     let r = c.fetch(n);
     return new Ok(r);
   } catch (e) {
-    return new Error(new DBErrorMessage(JSON.stringify(e)));
+    return new Error(new DBErrorJson(e));
   }
 }
 
@@ -145,7 +145,7 @@ export function subtransaction(f) {
     plv8.subtransaction(f);
     return new Ok(undefined);
   } catch (e) {
-    return new Error(new DBErrorMessage(JSON.stringify(e)));
+    return new Error(new DBErrorJson(e));
   }
 }
 
