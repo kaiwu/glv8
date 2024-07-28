@@ -5,10 +5,10 @@ import gleeunit/should
 pub fn rec_test() {
   plv8.scalar_to_record(42, "hi")
   |> dynamic.from
-  |> fn(d) {
-    let id = dynamic.field("i", dynamic.int)
-    let td = dynamic.field("t", dynamic.string)
-    #(id(d), td(d))
-  }
-  |> should.equal(#(Ok(42), Ok("hi")))
+  |> dynamic.decode2(
+    plv8.Rec,
+    dynamic.field("i", dynamic.int),
+    dynamic.field("t", dynamic.string),
+  )
+  |> should.equal(Ok(plv8.Rec(42, "hi")))
 }

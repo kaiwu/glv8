@@ -68,6 +68,20 @@ pub type Rec {
   Rec(i: Int, t: String)
 }
 
+pub fn set_of_records() -> Array(Rec) {
+  [Rec(1, "a"), Rec(2, "b"), Rec(3, "c")]
+  |> array.from_list
+}
+
+pub fn set_of_integers() -> Array(Int) {
+  [1, 2, 3]
+  |> array.from_list
+}
+
 pub fn scalar_to_record(i: Int, t: String) -> Rec {
   Rec(i, t)
+}
+
+pub fn fastsum(arr: Array(Int)) -> Int {
+  array.fold(arr, 0, fn(s, e) { s + e })
 }
