@@ -1,5 +1,6 @@
 import gleam/dynamic.{type DecodeErrors}
 import gleam/json.{type Json}
+import gleam/list
 
 pub const prefix = "glv8"
 
@@ -8,6 +9,18 @@ pub type DBError {
   DBErrorMessage(e: String)
   DBErrorJson(j: Json)
   DBErrorDecode(es: DecodeErrors)
+}
+
+pub fn error_to_string(e: DBError) -> String {
+  case e {
+    DBErrorMessage(m) -> m
+    DBError(Nil) -> "db unknown error"
+    DBErrorJson(j) -> json.to_string(j)
+    DBErrorDecode(es) ->
+      list.fold(es, "", fn(s, e) {
+        s <> "\n\nExpect '" <> e.expected <> "' Found '" <> e.found <> "'"
+      })
+  }
 }
 
 pub type Function0(r) =

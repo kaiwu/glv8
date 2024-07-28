@@ -18,6 +18,35 @@ pub type SubTransaction =
 ///
 ///
 ///
+pub fn shift(rs: Result(Array(a), DBError)) -> Result(#(a, Array(a)), DBError) {
+  rs
+  |> result.try(fn(rx) {
+    case array.to_list(rx) {
+      [f, ..t] -> Ok(#(f, array.from_list(t)))
+      [] -> Error(glv8.DBError(Nil))
+    }
+  })
+}
+
+///
+///
+///
+pub fn shift_as(
+  rs: Result(Array(a), DBError),
+  decoder f: fn(Dynamic) -> Result(b, DecodeErrors),
+) -> Result(b, DBError) {
+  shift(rs)
+  |> result.try(fn(t) {
+    t.0
+    |> dynamic.from
+    |> f
+    |> result.map_error(glv8.DBErrorDecode(_))
+  })
+}
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "execute")
 pub fn execute0(query q: String, parameters p: p) -> Result(Int, DBError)
 

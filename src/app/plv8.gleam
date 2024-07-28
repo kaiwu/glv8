@@ -2,6 +2,7 @@
 ////
 
 import gleam/bool
+import gleam/dynamic
 import gleam/javascript/array.{type Array}
 import gleam/json
 import gleam/list
@@ -36,9 +37,24 @@ pub fn catch_sql_error() -> Nil {
 
   case r {
     Error(glv8.DBErrorMessage(m)) -> elog_notice(m)
-    Ok(_) -> elog_notice("should not come here")
-    _ -> Nil
+    _ -> elog_notice("should not come here")
   }
+}
+
+pub fn catch_sql_error2() -> Array(String) {
+  let rs = database.execute_as("throw SQL error", Nil, dynamic.string)
+  use <- bool.guard(result.is_ok(rs), result.unwrap(rs, [] |> array.from_list))
+
+  rs
+  |> result.try_recover(fn(e) {
+    let _ = elog_notice(e |> glv8.error_to_string)
+    database.execute_as(
+      "select 'and execute queries again'",
+      Nil,
+      dynamic.string,
+    )
+  })
+  |> result.unwrap([] |> array.from_list)
 }
 
 pub type Rec {
