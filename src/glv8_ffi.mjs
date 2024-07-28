@@ -57,10 +57,6 @@ export function elog(l, m) {
   }
 }
 
-export function return_next(a) {
-  return plv8.return_next(a);
-}
-
 export function run_script(s, f) {
   plv8.run_script(s, f);
 }
