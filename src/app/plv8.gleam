@@ -7,6 +7,7 @@ import gleam/javascript/array.{type Array}
 import gleam/json
 import gleam/list
 import gleam/result
+import gleam/string
 import glv8
 import glv8/database
 import glv8/util.{elog_notice}
@@ -41,20 +42,26 @@ pub fn catch_sql_error() -> Nil {
   }
 }
 
-pub fn catch_sql_error2() -> Array(String) {
+pub fn catch_sql_error2() -> String {
   let rs = database.execute_as("throw SQL error", Nil, dynamic.string)
-  use <- bool.guard(result.is_ok(rs), result.unwrap(rs, [] |> array.from_list))
+  let fold = fn(rx) { array.fold(rx, "", string.append) }
+
+  use <- bool.guard(
+    when: result.is_ok(rs),
+    return: result.map(rs, fold) |> result.unwrap(""),
+  )
 
   rs
   |> result.try_recover(fn(e) {
     let _ = elog_notice(e |> glv8.error_to_string)
     database.execute_as(
-      "select 'and execute queries again'",
+      "select 'and execute queries again' t",
       Nil,
-      dynamic.string,
+      dynamic.field("t", dynamic.string),
     )
   })
-  |> result.unwrap([] |> array.from_list)
+  |> result.map(fold)
+  |> result.unwrap("")
 }
 
 pub type Rec {
