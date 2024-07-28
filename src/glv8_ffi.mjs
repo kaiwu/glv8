@@ -2,6 +2,10 @@ import { Ok, Error } from "./gleam.mjs"
 import { DBErrorMessage, DBErrorJson } from "./glv8.mjs"
 import { NilRow } from "./glv8/database.mjs"
 
+export function json(a) {
+  return a;
+}
+
 export function info() {
   return plv8_info();
 }

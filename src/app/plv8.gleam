@@ -4,12 +4,11 @@
 import gleam/bool
 import gleam/dynamic
 import gleam/javascript/array.{type Array}
-import gleam/dict
 import gleam/json
 import gleam/list
 import gleam/result
 import gleam/string
-import glv8.{type Record}
+import glv8
 import glv8/database
 import glv8/util.{elog_notice}
 
@@ -65,7 +64,10 @@ pub fn catch_sql_error2() -> String {
   |> result.unwrap("")
 }
 
-pub fn scalar_to_record(i: Int, t: String) -> Record {
-  [#("i", i |> json.int), #("t", t |> json.string)]
-  |> dict.from_list
+pub type Rec {
+  Rec(i: Int, t: String)
+}
+
+pub fn scalar_to_record(i: Int, t: String) -> Rec {
+  Rec(i, t)
 }

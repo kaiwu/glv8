@@ -7,6 +7,12 @@ import glv8.{
 ///
 ///
 ///
+@external(javascript, "../glv8_ffi.mjs", "json")
+pub fn to_json(a: a) -> Json
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "info")
 pub fn info() -> Json
 

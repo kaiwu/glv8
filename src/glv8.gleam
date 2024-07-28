@@ -1,11 +1,8 @@
 import gleam/dynamic.{type DecodeErrors}
 import gleam/json.{type Json}
-import gleam/dict.{type Dict}
 import gleam/list
 
 pub const prefix = "glv8"
-
-pub type Record = Dict(String, Json)
 
 pub type DBError {
   DBError(Nil)
