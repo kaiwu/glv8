@@ -120,28 +120,28 @@ pub fn run_script(script s: String, file f: String) -> Nil
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
-pub fn find_function0(function f: String) -> Function0
+pub fn find_function0(function f: String) -> Function0(r)
 
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
-pub fn find_function1(function f: String) -> Function1(a)
+pub fn find_function1(function f: String) -> Function1(a, r)
 
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
-pub fn find_function2(function f: String) -> Function2(a, b)
+pub fn find_function2(function f: String) -> Function2(a, b, r)
 
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
-pub fn find_function3(function f: String) -> Function3(a, b, c)
+pub fn find_function3(function f: String) -> Function3(a, b, c, r)
 
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
-pub fn find_function4(function f: String) -> Function4(a, b, c, d)
+pub fn find_function4(function f: String) -> Function4(a, b, c, d, r)
