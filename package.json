@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "build postgresql procedures with gleam",
   "scripts": {
+    "build": "gleam run -m build",
     "purge": "gleam clean && rm -rf dist/*",
     "clean": "rm -rf dist/*"
   },

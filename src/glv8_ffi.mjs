@@ -152,4 +152,3 @@ export function subtransaction(f) {
 export function get_window_object() {
   return plv8.get_window_object();
 }
-

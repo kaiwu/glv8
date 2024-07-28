@@ -2,8 +2,6 @@ import gleam/dynamic.{type DecodeErrors}
 import gleam/json.{type Json}
 import gleam/list
 
-pub const prefix = "glv8"
-
 pub type JsObject {
   JsObject
 }
@@ -45,3 +43,4 @@ pub type Function4(a, b, c, d, r) =
 pub type SqlFunction(f) {
   SqlFunction(f: f, sql: String)
 }
+
