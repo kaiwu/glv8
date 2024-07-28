@@ -113,6 +113,12 @@ pub fn elog_error(message m: String) -> Nil {
 ///
 ///
 ///
+@external(javascript, "../glv8_ffi.mjs", "return_next")
+pub fn return_next(a: a) -> a
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "run_script")
 pub fn run_script(script s: String, file f: String) -> Nil
 

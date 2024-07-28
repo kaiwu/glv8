@@ -1,6 +1,8 @@
 import gleam/dynamic.{type DecodeErrors}
 import gleam/json.{type Json}
 
+pub const prefix = "glv8"
+
 pub type DBError {
   DBError(Nil)
   DBErrorMessage(e: String)

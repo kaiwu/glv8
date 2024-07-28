@@ -57,6 +57,10 @@ export function elog(l, m) {
   }
 }
 
+export function return_next(a) {
+  return plv8.return_next(a);
+}
+
 export function run_script(s, f) {
   plv8.run_script(s, f);
 }
@@ -67,7 +71,7 @@ export function find_function(f) {
 
 export function execute(q, p) {
   try {
-    let r = plv8.execute(q, p);
+    let r = p ? plv8.execute(q, p) : plv8.execute(q);
     return new Ok(r);
   } catch (e) {
     return new Error(new DBErrorMessage(JSON.stringify(e)));
