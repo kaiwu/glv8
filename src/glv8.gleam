@@ -43,4 +43,3 @@ pub type Function4(a, b, c, d, r) =
 pub type SqlFunction(f) {
   SqlFunction(f: f, sql: String)
 }
-
