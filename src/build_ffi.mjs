@@ -1,10 +1,12 @@
 import { build, context } from 'esbuild'
 import { Ok, Error } from "./gleam.mjs"
 
-export function bundle_build(entry, global, out) {
+export function bundle_build(entry, global, ba, fo, out) {
   return new Promise(resolve => {
       build({
         entryPoints: [entry],
+        banner: {js: ba},
+        footer: {js: fo},
         bundle: true,
         minify: true,
         keepNames: true,
@@ -12,23 +14,10 @@ export function bundle_build(entry, global, out) {
         globalName: global,
         outfile: out,
       }).then(function(r){
-        resolve(new Ok(undefined))
+        resolve(new Ok(Nil))
       }).catch(function(e){
         resolve(new Error(JSON.stringify(e)))
       })
   })
 }
 
-export function copy_build(src, out) {
-  return new Promise(resolve => {
-      build({
-        entryPoints: [src],
-        loader: {'.js': 'copy'},
-        outfile: out,
-      }).then(function(r){
-        resolve(new Ok(undefined))
-      }).catch(function(e){
-        resolve(new Error(JSON.stringify(e)))
-      })
-  })
-}
