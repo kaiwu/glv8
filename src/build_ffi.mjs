@@ -7,6 +7,7 @@ export function bundle_build(entry, global, out) {
         entryPoints: [entry],
         bundle: true,
         minify: true,
+        keepNames: true,
         format: 'iife',
         globalName: global,
         outfile: out,
