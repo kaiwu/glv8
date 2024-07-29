@@ -14,7 +14,11 @@ export function merge(o, k, v) {
 }
 
 export function get(o, k) {
-  return k in o ? new Ok(o[k]) : new Error(undefined)
+  return k in o ? new Ok(o[k]) : new Error(undefined);
+}
+
+export function name(f) {
+  return f.name;
 }
 
 export function id(a) {

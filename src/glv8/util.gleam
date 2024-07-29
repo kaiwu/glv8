@@ -18,11 +18,18 @@ pub fn object() -> JsObject
 @external(javascript, "../glv8_ffi.mjs", "merge")
 pub fn merge(o: JsObject, k: k, v: v) -> JsObject
 
+
 ///
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "get")
 pub fn get(o: JsObject, k: k) -> Result(JsObject, Nil)
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "name")
+pub fn name(a: a) -> String
 
 ///
 ///

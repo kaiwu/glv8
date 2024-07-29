@@ -5,12 +5,12 @@ import gleam/result
 import gleeunit/should
 import glv8/util
 
-pub fn object_test() {
-  let f = fn(a) { a + 1 }
+// import gleam/io
 
+pub fn object_test() {
   util.object()
-  |> util.merge("f", f)
-  |> util.get("f")
+  |> util.merge(util.name(plv8.fastsum), plv8.fastsum)
+  |> util.get("fastsum")
   |> result.map(javascript.type_of)
   |> should.equal(Ok(javascript.FunctionType))
 }

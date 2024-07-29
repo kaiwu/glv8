@@ -20,7 +20,7 @@ pub fn error_to_string(e: DBError) -> String {
     DBErrorJson(j) -> json.to_string(j)
     DBErrorDecode(es) ->
       list.fold(es, "", fn(s, e) {
-        s <> "\n\nExpect '" <> e.expected <> "' Found '" <> e.found <> "'"
+        s <> "\nExpect '" <> e.expected <> "' Found '" <> e.found <> "'"
       })
   }
 }

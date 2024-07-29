@@ -18,3 +18,16 @@ export function bundle_build(entry, global, out) {
   })
 }
 
+export function copy_build(src, out) {
+  return new Promise(resolve => {
+      build({
+        entryPoints: [src],
+        loader: {'.js': 'copy'},
+        outfile: out,
+      }).then(function(r){
+        resolve(new Ok(undefined))
+      }).catch(function(e){
+        resolve(new Error(JSON.stringify(e)))
+      })
+  })
+}
