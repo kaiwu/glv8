@@ -1,4 +1,5 @@
 import app/plv8
+import bundle
 import gleam/dynamic
 import gleam/javascript
 import gleam/result
@@ -24,4 +25,11 @@ pub fn rec_test() {
     dynamic.field("t", dynamic.string),
   )
   |> should.equal(Ok(plv8.Rec(42, "hi")))
+}
+
+pub fn bundle_test() {
+  bundle.exports()
+  |> util.get("fastsum")
+  |> result.map(javascript.type_of)
+  |> should.equal(Ok(javascript.FunctionType))
 }

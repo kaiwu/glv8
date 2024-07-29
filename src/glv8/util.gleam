@@ -18,7 +18,6 @@ pub fn object() -> JsObject
 @external(javascript, "../glv8_ffi.mjs", "merge")
 pub fn merge(o: JsObject, k: k, v: v) -> JsObject
 
-
 ///
 ///
 ///
