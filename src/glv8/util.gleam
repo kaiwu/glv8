@@ -21,6 +21,13 @@ pub fn merge(o: JsObject, k: k, v: v) -> JsObject
 ///
 ///
 ///
+pub fn export(o: JsObject, f: f) -> JsObject {
+  merge(o, name(f), f)
+}
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "get")
 pub fn get(o: JsObject, k: k) -> Result(JsObject, Nil)
 
