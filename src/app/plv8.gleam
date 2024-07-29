@@ -94,7 +94,7 @@ pub fn return_sql() -> Array(Rec) {
       dynamic.field("t", dynamic.string),
     )
   database.execute_as(
-    "SELECT i, $1 || i AS s FROM generate_series(1, $2) as t(i)",
+    "SELECT i, $1 || i AS t FROM generate_series(1, $2) as tt(i)",
     #("s", 4),
     decode,
   )
