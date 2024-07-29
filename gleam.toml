@@ -1,6 +1,6 @@
 name = "glv8"
-version = "0.1.0"
-description = "Facilities to write postgresql procedures with gleam, through plv8's JavaScript binding"
+version = "1.0.0"
+description = "Write functional type-safe postgresql procedures with gleam, through plv8's JavaScript binding"
 target = "javascript"
 
 # Fill out these fields if you intend to generate HTML documentation or publish
