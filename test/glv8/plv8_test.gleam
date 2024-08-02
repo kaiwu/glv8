@@ -33,3 +33,26 @@ pub fn bundle_test() {
   |> result.map(javascript.type_of)
   |> should.equal(Ok(javascript.FunctionType))
 }
+
+pub fn nil_test() {
+  util.check_nil(Nil)
+  |> should.equal(False)
+
+  util.check_nil(False)
+  |> should.equal(False)
+
+  util.check_nil(0)
+  |> should.equal(False)
+
+  util.check_nil("")
+  |> should.equal(False)
+
+  util.check_nil(True)
+  |> should.equal(True)
+
+  util.check_nil(1)
+  |> should.equal(True)
+
+  util.check_nil(util.object())
+  |> should.equal(True)
+}

@@ -190,3 +190,9 @@ pub fn find_function3(function f: String) -> Function3(a, b, c, r)
 ///
 @external(javascript, "../glv8_ffi.mjs", "find_function")
 pub fn find_function4(function f: String) -> Function4(a, b, c, d, r)
+
+///
+///
+///
+@external(javascript, "../glv8_ffi.mjs", "check_nil")
+pub fn check_nil(o: o) -> Bool
