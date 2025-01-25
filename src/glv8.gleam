@@ -1,6 +1,8 @@
-import gleam/dynamic.{type DecodeErrors}
+import gleam/dynamic/decode.{type DecodeError}
 import gleam/json.{type Json}
 import gleam/list
+
+pub type DecodeErrors = List(DecodeError)
 
 pub type JsObject {
   JsObject

@@ -2,7 +2,7 @@
 ////
 
 import gleam/bool
-import gleam/dynamic
+import gleam/dynamic/decode
 import gleam/javascript/array.{type Array}
 import gleam/json
 import gleam/list
@@ -43,7 +43,7 @@ pub fn catch_sql_error() -> Nil {
 }
 
 pub fn catch_sql_error2() -> String {
-  let rs = database.execute_as("throw SQL error", Nil, dynamic.string)
+  let rs = database.execute_as("throw SQL error", Nil, decode.string)
   let fold = fn(rx) { array.fold(rx, "", string.append) }
 
   use <- bool.guard(
@@ -54,10 +54,14 @@ pub fn catch_sql_error2() -> String {
   rs
   |> result.try_recover(fn(e) {
     let _ = elog_notice(e |> glv8.error_to_string)
+    let decoder = {
+      use value <- decode.field("t", decode.string)
+      decode.success(value)
+    }
     database.execute_as(
       "select 'and execute queries again' t",
       Nil,
-      dynamic.field("t", dynamic.string),
+      decoder,
     )
   })
   |> result.map(fold)
@@ -87,16 +91,15 @@ pub fn fastsum(arr: Array(Int)) -> Int {
 }
 
 pub fn return_sql() -> Array(Rec) {
-  let decode =
-    dynamic.decode2(
-      Rec,
-      dynamic.field("i", dynamic.int),
-      dynamic.field("t", dynamic.string),
-    )
+  let decoder = {
+    use i <- decode.field("i", decode.int)
+    use t <- decode.field("t", decode.string)
+    decode.success(Rec(i: i, t: t))
+  }
   database.execute_as(
     "SELECT i, $1 || i AS t FROM generate_series(1, $2) as tt(i)",
     #("s", 4),
-    decode,
+    decoder,
   )
   |> result.unwrap([] |> array.from_list)
 }

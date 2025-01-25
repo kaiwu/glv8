@@ -1,6 +1,7 @@
 import app/plv8
 import bundle
 import gleam/dynamic
+import gleam/dynamic/decode
 import gleam/javascript
 import gleam/result
 import gleeunit/should
@@ -17,13 +18,14 @@ pub fn object_test() {
 }
 
 pub fn rec_test() {
+  let decoder = {
+    use i <- decode.field("i", decode.int)
+    use t <- decode.field("t", decode.string)
+    decode.success(plv8.Rec(i:i, t:t))
+  }
   plv8.scalar_to_record(42, "hi")
   |> dynamic.from
-  |> dynamic.decode2(
-    plv8.Rec,
-    dynamic.field("i", dynamic.int),
-    dynamic.field("t", dynamic.string),
-  )
+  |> decode.run(decoder) 
   |> should.equal(Ok(plv8.Rec(42, "hi")))
 }
 

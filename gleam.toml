@@ -1,5 +1,5 @@
 name = "glv8"
-version = "1.0.0"
+version = "1.0.1"
 description = "Write functional type-safe postgresql procedures with gleam, through plv8's JavaScript binding"
 target = "javascript"
 

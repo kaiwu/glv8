@@ -1,7 +1,8 @@
-import gleam/dynamic.{type DecodeErrors, type Dynamic}
+import gleam/dynamic.{type Dynamic}
 import gleam/javascript/array.{type Array}
+import gleam/dynamic/decode.{type Decoder}
 import gleam/result
-import glv8.{type DBError}
+import glv8.{type DBError, type DecodeErrors}
 
 pub type Row {
   Row
@@ -11,6 +12,7 @@ pub type Row {
 pub type PreparedPlan
 
 pub type Cursor
+
 
 pub type SubTransaction =
   fn() -> Nil
@@ -61,12 +63,12 @@ pub fn execute(query q: String, parameters p: p) -> Result(Array(Row), DBError)
 ///
 pub fn decode(
   rows rs: Array(Row),
-  decoder f: fn(Dynamic) -> Result(a, DecodeErrors),
+  decoder f: Decoder(a),
 ) -> Result(Array(a), DBError) {
   rs
   |> array.to_list
   |> dynamic.from
-  |> dynamic.list(of: f)
+  |> decode.run(decode.list(f))
   |> result.map(array.from_list(_))
   |> result.map_error(glv8.DBErrorDecode(_))
 }
@@ -77,7 +79,7 @@ pub fn decode(
 pub fn execute_as(
   query q: String,
   parameters p: p,
-  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+  of f: Decoder(a),
 ) -> Result(Array(a), DBError) {
   execute(q, p)
   |> result.try(decode(_, f))
@@ -104,7 +106,7 @@ pub fn plan_execute(
 pub fn plan_execute_as(
   plan pl: PreparedPlan,
   parameters p: p,
-  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+  of f: Decoder(a),
 ) -> Result(Array(a), DBError) {
   plan_execute(pl, p)
   |> result.try(decode(_, f))
@@ -167,7 +169,7 @@ pub fn cursor_fetch_rows(
 pub fn cursor_fetch_rows_as(
   cursor c: Cursor,
   rows n: Int,
-  of f: fn(Dynamic) -> Result(a, DecodeErrors),
+  of f: Decoder(a),
 ) -> Result(Array(a), DBError) {
   cursor_fetch_rows(c, n)
   |> result.try(decode(_, f))
