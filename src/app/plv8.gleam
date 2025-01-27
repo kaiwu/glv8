@@ -58,11 +58,7 @@ pub fn catch_sql_error2() -> String {
       use value <- decode.field("t", decode.string)
       decode.success(value)
     }
-    database.execute_as(
-      "select 'and execute queries again' t",
-      Nil,
-      decoder,
-    )
+    database.execute_as("select 'and execute queries again' t", Nil, decoder)
   })
   |> result.map(fold)
   |> result.unwrap("")

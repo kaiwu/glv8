@@ -1,6 +1,6 @@
 import gleam/dynamic.{type Dynamic}
-import gleam/javascript/array.{type Array}
 import gleam/dynamic/decode.{type Decoder}
+import gleam/javascript/array.{type Array}
 import gleam/result
 import glv8.{type DBError, type DecodeErrors}
 
@@ -12,7 +12,6 @@ pub type Row {
 pub type PreparedPlan
 
 pub type Cursor
-
 
 pub type SubTransaction =
   fn() -> Nil
