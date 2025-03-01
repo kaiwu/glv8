@@ -1,5 +1,4 @@
 import gleam/dynamic.{type Dynamic}
-import gleam/javascript.{type Symbol, get_symbol}
 import gleam/json.{type Json}
 import glv8.{
   type Function0, type Function1, type Function2, type Function3, type Function4,
@@ -83,76 +82,76 @@ pub fn memory_usage() -> Json
 ///
 ///
 @external(javascript, "../glv8_ffi.mjs", "elog")
-pub fn elog(level l: Symbol, message m: String) -> Nil
+pub fn elog(level l: String, message m: String) -> Nil
 
 ///
 ///
 ///
 pub fn elog_debug5(message m: String) -> Nil {
-  elog(get_symbol("DEBUG5"), m)
+  elog("DEBUG5", m)
 }
 
 ///
 ///
 ///
 pub fn elog_debug4(message m: String) -> Nil {
-  elog(get_symbol("DEBUG4"), m)
+  elog("DEBUG4", m)
 }
 
 ///
 ///
 ///
 pub fn elog_debug3(message m: String) -> Nil {
-  elog(get_symbol("DEBUG3"), m)
+  elog("DEBUG3", m)
 }
 
 ///
 ///
 ///
 pub fn elog_debug2(message m: String) -> Nil {
-  elog(get_symbol("DEBUG2"), m)
+  elog("DEBUG2", m)
 }
 
 ///
 ///
 ///
 pub fn elog_debug1(message m: String) -> Nil {
-  elog(get_symbol("DEBUG1"), m)
+  elog("DEBUG1", m)
 }
 
 ///
 ///
 ///
 pub fn elog_log(message m: String) -> Nil {
-  elog(get_symbol("LOG"), m)
+  elog("LOG", m)
 }
 
 ///
 ///
 ///
 pub fn elog_info(message m: String) -> Nil {
-  elog(get_symbol("INFO"), m)
+  elog("INFO", m)
 }
 
 ///
 ///
 ///
 pub fn elog_notice(message m: String) -> Nil {
-  elog(get_symbol("NOTICE"), m)
+  elog("NOTICE", m)
 }
 
 ///
 ///
 ///
 pub fn elog_warning(message m: String) -> Nil {
-  elog(get_symbol("WARNING"), m)
+  elog("WARNING", m)
 }
 
 ///
 ///
 ///
 pub fn elog_error(message m: String) -> Nil {
-  elog(get_symbol("ERROR"), m)
+  elog("ERROR", m)
 }
 
 ///

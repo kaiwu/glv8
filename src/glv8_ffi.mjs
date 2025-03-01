@@ -46,7 +46,7 @@ export function memory_usage() {
 }
 
 export function elog(l, m) {
-  switch (Symbol.keyFor(l)) {
+  switch (l) {
     case "DEBUG5":
       plv8.elog(DEBUG5, m);
       break;
