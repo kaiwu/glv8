@@ -41,7 +41,7 @@ pub fn shift_as(
     t.0
     |> dynamic.from
     |> f
-    |> result.map_error(glv8.DBErrorDecode(_))
+    |> result.map_error(glv8.DBErrorDecode)
   })
 }
 
@@ -68,8 +68,8 @@ pub fn decode(
   |> array.to_list
   |> dynamic.from
   |> decode.run(decode.list(f))
-  |> result.map(array.from_list(_))
-  |> result.map_error(glv8.DBErrorDecode(_))
+  |> result.map(array.from_list)
+  |> result.map_error(glv8.DBErrorDecode)
 }
 
 ///
@@ -139,7 +139,7 @@ pub fn decode0(
   r
   |> dynamic.from
   |> f
-  |> result.map_error(glv8.DBErrorDecode(_))
+  |> result.map_error(glv8.DBErrorDecode)
 }
 
 ///
