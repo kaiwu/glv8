@@ -3,6 +3,7 @@ import gleam/dynamic/decode.{type Decoder}
 import gleam/javascript/array.{type Array}
 import gleam/result
 import glv8.{type DBError, type DecodeErrors}
+import glv8/util.{from}
 
 pub type Row {
   Row
@@ -39,7 +40,7 @@ pub fn shift_as(
   shift(rs)
   |> result.try(fn(t) {
     t.0
-    |> dynamic.from
+    |> from
     |> f
     |> result.map_error(glv8.DBErrorDecode)
   })
@@ -66,7 +67,7 @@ pub fn decode(
 ) -> Result(Array(a), DBError) {
   rs
   |> array.to_list
-  |> dynamic.from
+  |> from
   |> decode.run(decode.list(f))
   |> result.map(array.from_list)
   |> result.map_error(glv8.DBErrorDecode)
@@ -137,7 +138,7 @@ pub fn decode0(
   decoder f: fn(Dynamic) -> Result(a, DecodeErrors),
 ) -> Result(a, DBError) {
   r
-  |> dynamic.from
+  |> from
   |> f
   |> result.map_error(glv8.DBErrorDecode)
 }

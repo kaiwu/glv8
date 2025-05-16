@@ -1,5 +1,4 @@
 import app/plv8
-import gleam/dynamic
 import gleam/dynamic/decode
 import gleeunit/should
 import glv8/util
@@ -11,7 +10,7 @@ pub fn rec_test() {
     decode.success(plv8.Rec(i: i, t: t))
   }
   plv8.scalar_to_record(42, "hi")
-  |> dynamic.from
+  |> util.from
   |> decode.run(decoder)
   |> should.equal(Ok(plv8.Rec(42, "hi")))
 }

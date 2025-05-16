@@ -8,6 +8,12 @@ import glv8.{
 ///
 ///
 ///
+@external(javascript, "../glv8_ffi.mjs", "identity")
+pub fn from(a: anything) -> Dynamic
+
+///
+///
+///
 @external(javascript, "../glv8_ffi.mjs", "object")
 pub fn object() -> JsObject
 
